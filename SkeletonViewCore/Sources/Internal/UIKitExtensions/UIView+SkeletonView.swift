@@ -65,6 +65,7 @@ extension UIView {
         }
         _currentSkeletonConfig?.transition = transition
         unSwizzleLayoutSubviews()
+        unSwizzleSetFrame()
         unSwizzleTraitCollectionDidChange()
         removeDummyDataSourceIfNeeded(reloadAfter: reload)
         subviewsSkeletonables.recursiveSearch(leafBlock: {
@@ -98,6 +99,7 @@ private extension UIView {
         guard isSkeletonable && !sk.isSkeletonActive else { return }
         _currentSkeletonConfig = config
         swizzleLayoutSubviews()
+        swizzleSetFrame()
         swizzleTraitCollectionDidChange()
         addDummyDataSourceIfNeeded()
         subviewsSkeletonables.recursiveSearch(leafBlock: {

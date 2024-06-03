@@ -51,6 +51,28 @@ extension UIView {
         }
     }
     
+    func swizzleSetFrame() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            DispatchQueue.once(token: "UIView.SkeletonView.swizzleSetFrame") {
+                swizzle(selector: #selector(setter: UIView.frame),
+                        with: #selector(UIView.skeletonLayoutSubviews),
+                        inClass: UIView.self,
+                        usingClass: UIView.self)
+            }
+        }
+    }
+    
+    func unSwizzleSetFrame() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            DispatchQueue.removeOnce(token: "UIView.SkeletonView.swizzleSetFrame") {
+                swizzle(selector: #selector(setter: UIView.frame),
+                        with: #selector(UIView.skeletonLayoutSubviews),
+                        inClass: UIView.self,
+                        usingClass: UIView.self)
+            }
+        }
+    }
+    
     func swizzleTraitCollectionDidChange() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             DispatchQueue.once(token: "UIView.SkeletonView.swizzleTraitCollectionDidChange") {
